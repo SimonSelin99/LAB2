@@ -16,7 +16,7 @@ public class Storeable {
     }
     protected void loadCar(car car, double[] position) {
         for (int i = 0; i < maxCars; i++) {
-            if(null == storedCars[carIndex]) {
+            if(null == storedCars[i]) {
                 carIndex = i;
                 break;
             }
@@ -49,11 +49,11 @@ public class Storeable {
     }
     protected void unloadSpecificCar (car car, double[] position){
         int ind = 0;
-        car.setPosition(new double[] {position[0], position[1]});
         for(car c:storedCars) {
             if (car == c) {
+                storedCars[ind].setPosition(new double[] {position[0], position[1]});
                 storedCars[ind] = null;
-                break;
+                return;
             }
             ind++;
         }

@@ -97,8 +97,8 @@ public class testtransport {
         testTransport.loadCar(tTestVolvo240);
         testTransport.loadCar(tTestSaab95);
         testTransport.unLoadCar(1);
-        assertEquals(tTestVolvo240, testTransport.storeable.getStoredCars()[0]);
-                //testTransport.storeable.getStoredCars()[0] == tTestVolvo240 );
+        assertTrue(tTestVolvo240 == testTransport.storeable.getStoredCars()[0] &&
+                testTransport.storeable.getStoredCars()[1] == null);
     }
 
     @After
