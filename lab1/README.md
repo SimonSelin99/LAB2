@@ -14,3 +14,11 @@ för att ändra och använda oss av dem värderna. Sen har vi gjort alla metoder
 till protected så att endast subclasser till car kan använda metoderna.
 Men på grund av testclasserna gjorde vi om dem till public istället.
 Vi vill exponera bilarnas värden utan att car ändras.
+
+lab1
+superkonstruktor och abstrakta för att minska setters
+
+lab2
+komposition för truckbed
+
+parametrisk polymorfism
