@@ -1,20 +1,16 @@
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Storeable {
 
     private int maxCars;
-    private car[] storedCars;
+    private Car[] storedCars;
     private String[] allowedCars;
     private int carIndex;
     Storeable(int maxCars, String[] allowedCars){
         this.maxCars = maxCars;
         this.allowedCars = allowedCars;
-        this.storedCars = new car[maxCars];
+        this.storedCars = new Car[maxCars];
         this.carIndex = 0;
     }
-    protected void loadCar(car car, double[] position) {
+    protected void loadCar(Car car, double[] position) {
         for (int i = 0; i < maxCars; i++) {
             if(null == storedCars[i]) {
                 carIndex = i;
@@ -47,9 +43,9 @@ public class Storeable {
             amount--;
         }
     }
-    protected void unloadSpecificCar (car car, double[] position){
+    protected void unloadSpecificCar (Car car, double[] position){
         int ind = 0;
-        for(car c:storedCars) {
+        for(Car c:storedCars) {
             if (car == c) {
                 storedCars[ind].setPosition(new double[] {position[0], position[1]});
                 storedCars[ind] = null;
@@ -60,7 +56,7 @@ public class Storeable {
         throw new IllegalArgumentException("Car not stored");
     }
 
-    public car[] getStoredCars() {
+    public Car[] getStoredCars() {
         return storedCars;
     }
 

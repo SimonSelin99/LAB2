@@ -3,9 +3,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-public class testsaab95 {
+public class TestSaab95 {
     public Saab95 testSaab;
     @Before
     public void setUp() {
@@ -19,7 +18,7 @@ public class testsaab95 {
     }
     @Test
     public void testDoors() {
-        assertTrue(testSaab.getNrDoors()==2);
+        assertEquals(2,testSaab.getNrDoors());
     }
 
     @Test
@@ -65,12 +64,12 @@ public class testsaab95 {
     @Test
     public void testTurnLeft(){
         testSaab.turnLeft();
-        assertEquals(testSaab.getCurrentDirection() , car.Direction.LEFT);
+        assertEquals(Car.Direction.LEFT, testSaab.getCurrentDirection());
     }
     @Test
     public void testTurnRight(){
         testSaab.turnRight();
-        assertEquals(testSaab.getCurrentDirection() , car.Direction.RIGHT);
+        assertEquals(Car.Direction.RIGHT, testSaab.getCurrentDirection());
     }
     @Test
     public void testStopEngine(){

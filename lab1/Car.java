@@ -1,28 +1,31 @@
 import java.awt.*;
 
-public abstract class car implements Movable{
+public abstract class Car implements Movable{
 
-    private int nrDoors; // Number of doors on the car
-    private double enginePower; // Engine power of the car
+    private final int nrDoors; // Number of doors on the car
+    private final double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
-    private Color color; // Color of the car
-    private String modelName; // The car model name
+    private final Color color; // Color of the car
+    private final String modelName; // The car model name
     private Direction currentDirection;
     private double[] position = new double[2];
-    public enum Direction {UP, RIGHT, DOWN, LEFT};
+    public enum Direction {UP, RIGHT, DOWN, LEFT}
 
-    public int getNrDoors() { return nrDoors; }
-
-    protected void setNrDoors(int nrDoors) {
+    public Car(int nrDoors, double enginePower, Color color, String modelName){
         this.nrDoors = nrDoors;
+        this.enginePower = enginePower;
+        this.color = color;
+        this.modelName = modelName;
+        setCurrentDirection(Direction.UP);
+        setPosition(new double[] {0,0});
+        stopEngine();
     }
+
+    public abstract double speedFactor();
+    public int getNrDoors() { return nrDoors; }
 
     public double getEnginePower(){
         return enginePower;
-    }
-
-    protected void setEnginePower(double enginePower) {
-        this.enginePower = enginePower;
     }
 
     public double getCurrentSpeed(){
@@ -37,10 +40,6 @@ public abstract class car implements Movable{
         return color;
     }
 
-    protected void setColor(Color color){
-        this.color = color;
-    }
-
     public void startEngine(){
         currentSpeed = 0.1;
     }
@@ -53,15 +52,11 @@ public abstract class car implements Movable{
         return currentDirection;
     }
 
-    protected void setCurrentDirection(Direction currentDirection) {
+    private void setCurrentDirection(Direction currentDirection) {
         this.currentDirection = currentDirection;
     }
 
     public String getModelName() { return modelName; }
-
-    protected void setModelName(String modelName) {
-        this.modelName = modelName;
-    }
 
     public double[] getPosition() { return position;}
 
@@ -73,6 +68,15 @@ public abstract class car implements Movable{
 
     public void incrementY(double y) { this.position[1] += y;}
 
+    public void gas(double amount) {
+        double adjustedAmount = Math.max(0, Math.min(amount, 1)) * speedFactor();
+        setCurrentSpeed(getCurrentSpeed() + adjustedAmount);
+    }
+
+    public void brake(double amount) {
+        double adjustedAmount = Math.max(0, Math.min(amount, 1)) * speedFactor();
+        setCurrentSpeed(getCurrentSpeed() - adjustedAmount);
+    }
     @Override
     public void move() {
         switch(getCurrentDirection())

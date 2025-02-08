@@ -1,4 +1,4 @@
-abstract public class Truckbed extends car {
+abstract public class Truckbed extends Car {
     private int angle = 0;
     protected void setTruckBed(int angle) {
         if (getCurrentSpeed() == 0) {

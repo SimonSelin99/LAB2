@@ -39,7 +39,7 @@ public class Transport extends Truckbed {
     public void setRamp(boolean rampUp) {
         setTruckBed(rampUp);
     }
-    public void loadCar(car car) {
+    public void loadCar(Car car) {
         if (car instanceof Truckbed) {
             throw new IllegalArgumentException("Truckbeds are not allowed");
         }

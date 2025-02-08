@@ -3,15 +3,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
-import static java.lang.String.valueOf;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-public class testvolvo240 {
+public class TestVolvo240 {
     public Volvo240 testVolvo;
     @Before
     public void setUp() {
@@ -25,20 +20,20 @@ public class testvolvo240 {
     }
     @Test
     public void testDoors() {
-        assertTrue(testVolvo.getNrDoors()==4);
+        assertEquals(testVolvo.getNrDoors(),4);
     }
     @Test
-    public void testColor() {assertTrue(testVolvo.getColor()== Color.black);}
+    public void testColor() {assertEquals(Color.black,testVolvo.getColor());}
     @Test
     public void testEnginePower() {
-        assertTrue(testVolvo.getEnginePower()==100);
+        assertEquals(100,testVolvo.getEnginePower(),0.01);
     }
     @Test
-    public void testModelName() {assertTrue(testVolvo.getModelName() == "Volvo240");}
+    public void testModelName() {assertEquals("Volvo240",testVolvo.getModelName());}
     @Test
-    public void testDirection() {assertTrue(testVolvo.getCurrentDirection() == car.Direction.UP);}
+    public void testDirection() {assertEquals(Car.Direction.UP,testVolvo.getCurrentDirection());}
     @Test
-    public void testPosition() {assertTrue(Arrays.equals(testVolvo.getPosition(), new double[] {0,0}));}
+    public void testPosition() {assertArrayEquals(new double[]{0, 0}, testVolvo.getPosition(), 0.0);}
     @Test
     public void testGasNegative() {
         double speed = testVolvo.getCurrentSpeed();
@@ -74,12 +69,12 @@ public class testvolvo240 {
     @Test
     public void testTurnLeft(){
         testVolvo.turnLeft();
-        assertEquals(testVolvo.getCurrentDirection() , car.Direction.LEFT);
+        assertEquals(testVolvo.getCurrentDirection() , Car.Direction.LEFT);
     }
     @Test
     public void testTurnRight(){
         testVolvo.turnRight();
-        assertEquals(testVolvo.getCurrentDirection() , car.Direction.RIGHT);
+        assertEquals(testVolvo.getCurrentDirection() , Car.Direction.RIGHT);
     }
     @Test
     public void testStopEngine(){

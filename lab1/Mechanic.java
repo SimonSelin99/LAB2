@@ -1,5 +1,3 @@
-import java.awt.*;
-
 public class Mechanic {
     public final Storeable storeable;
     private final double[] position;
@@ -7,10 +5,10 @@ public class Mechanic {
         this.storeable = new Storeable(maxCars, allowedCars);
         this.position=position;
     }
-    public void getCar(car car){
+    public void getCar(Car car){
         storeable.unloadSpecificCar(car,position);
     }
-    public void loadCar(car car){
+    public void loadCar(Car car){
         storeable.loadCar(car, car.getPosition());
     }
 }
