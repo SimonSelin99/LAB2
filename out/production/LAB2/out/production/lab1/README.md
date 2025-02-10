@@ -11,6 +11,6 @@ och inga variabler/fält, ett interface hade inneburit mer kodduplicering.
 #Vilken synlighet bör ni använda för de olika metoder och variabler som klasserna innehåller? Vilket gränssnitt bör ni exponera?
 Vi tycker att det är bäst att ha private på alla variabler och använder oss av getter och setters 
 för att ändra och använda oss av dem värderna. Sen har vi gjort alla metoder
-till protected så att endast subclasser till car kan använda metoderna.
+till protected så att endast subclasser till Car kan använda metoderna.
 Men på grund av testclasserna gjorde vi om dem till public istället.
-Vi vill exponera bilarnas värden utan att car ändras.
+Vi vill exponera bilarnas värden utan att Car ändras.

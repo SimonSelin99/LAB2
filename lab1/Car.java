@@ -22,6 +22,7 @@ public abstract class Car implements Movable{
     }
 
     public abstract double speedFactor();
+
     public int getNrDoors() { return nrDoors; }
 
     public double getEnginePower(){
@@ -77,6 +78,7 @@ public abstract class Car implements Movable{
         double adjustedAmount = Math.max(0, Math.min(amount, 1)) * speedFactor();
         setCurrentSpeed(getCurrentSpeed() - adjustedAmount);
     }
+
     @Override
     public void move() {
         switch(getCurrentDirection())
@@ -133,5 +135,4 @@ public abstract class Car implements Movable{
                 break;
         }
     }
-
 }
