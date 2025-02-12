@@ -1,16 +1,18 @@
 import java.awt.*;
 
-public class Scania extends Truckbed{
+public class Scania extends Car{
+
+    private final Truckbed truckbed;
+
     public Scania(){
         super(2,200,Color.black,"Scania");
-
-        setTruckBed(0);
+        this.truckbed = new Truckbed(this);
         stopEngine();
     }
 
-    public <I> void setTruckBed(I angle) {
+    public  void setTruckBed(int angle) {
         if (getCurrentSpeed() == 0) {
-            this.setAngle((int) angle);
+            truckbed.setAngle(angle);
         }
     }
 

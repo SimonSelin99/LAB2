@@ -9,6 +9,7 @@ public class Storeable {
     Storeable(int maxCars, String[] allowedCars){
         this.maxCars = maxCars;
         this.allowedCars = allowedCars;
+        Collection<Car> animals = new ArrayList<Animal>();
         this.storedCars = new Car[maxCars];
         this.carIndex = 0;
     }
