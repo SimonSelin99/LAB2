@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Scania extends Car{
+public class Scania extends BigCar{
 
     private final Truckbed truckbed;
 
@@ -20,9 +20,15 @@ public class Scania extends Car{
         return getEnginePower() * 0.01;
     }
 
-    public void incrementTruckBed(int angle){
-        setTruckBed(angle);
-
-    }
+    public void incrementTruckBed(int angle){setTruckBed(angle);}
     public void decrementTruckBed(int angle){setTruckBed(-angle);}
+
+    public int getAngle(){return truckbed.getAngle();}
+
+    @Override
+    public void gas(double amount) {
+        if (truckbed.getAngle() == 0) {
+            super.gas(amount);
+        }
+    }
 }

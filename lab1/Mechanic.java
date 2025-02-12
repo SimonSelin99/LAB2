@@ -1,10 +1,10 @@
 
 public class Mechanic {
-    public final Storeable storeable;
+    private Storeable storeable;
     private final double[] position;
-    public Mechanic(int maxCars, String[] allowedCars, double[] position){
-        this.storeable = new Storeable(maxCars, allowedCars);
-        this.position=position;
+    public Mechanic(Car[] storedCars, double[] position){
+        this.storeable = new Storeable(storedCars);
+        this.position = position;
     }
     public void getCar(Car car){
         storeable.unloadSpecificCar(car,position);
@@ -12,4 +12,5 @@ public class Mechanic {
     public void loadCar(Car car){
         storeable.loadCar(car, car.getPosition());
     }
+    public Car[] getStoredCars() {return storeable.getStoredCars();}
 }

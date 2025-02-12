@@ -13,8 +13,8 @@ public class TestTransport {
     public Scania tTestScania;
     @Before
     public void setUp() {
-        testTransport = new Transport(5,new String[] {"Volvo240","Saab95"});
-        testTransportO = new Transport(1,new String[] {"Volvo240","Saab95"});
+        testTransport = new Transport(new SmallCar[5]);
+        testTransportO = new Transport(new SmallCar[1]);
 
         tTestSaab95 = new Saab95();
         tTestVolvo240 = new Volvo240();
@@ -24,27 +24,28 @@ public class TestTransport {
     @Test
     public void incbed(){
         testTransport.setTruckBed(false);
-        assertEquals(0,testTransport.getAngle());
+        assertEquals(true,testTransport.getRampUp());
     }
     @Test
     public void incbedstill(){
         testTransport.stopEngine();
         testTransport.setTruckBed(false);
-        assertEquals(70,testTransport.getAngle());
+        assertEquals(false,testTransport.getRampUp());
     }
+
     @Test
     public void decbed(){
         testTransport.stopEngine();
         testTransport.setTruckBed(false);
         testTransport.setTruckBed(true);
-        assertEquals(0,testTransport.getAngle());
+        assertEquals(true,testTransport.getRampUp());
     }
    @Test
    public void loadCar(){
         testTransport.stopEngine();
         testTransport.setTruckBed(false);
         testTransport.loadCar(tTestSaab95);
-        assertEquals(testTransport.storeable.getStoredCars()[0], tTestSaab95);
+        assertEquals(testTransport.getStoredCars()[0], tTestSaab95);
    }
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void overloadCar(){
@@ -58,7 +59,7 @@ public class TestTransport {
     public void rampUpLoad(){
         testTransport.setTruckBed(true);
         testTransport.loadCar(tTestSaab95);
-        assertNull(testTransport.storeable.getStoredCars()[0]);
+        assertNull(testTransport.getStoredCars()[0]);
 
     }
     @Test
@@ -86,10 +87,7 @@ public class TestTransport {
         testTransport.move();
         assertEquals(testTransport.getPosition()[1] - 0.1, tTestSaab95.getPosition()[1],0.01);
     }
-    @Test(expected = IllegalArgumentException.class)
-    public void loadTruckBed(){
-        testTransport.loadCar(tTestScania);
-    }
+
     @Test
     public void unLoadCar(){
         testTransport.stopEngine();
@@ -97,8 +95,8 @@ public class TestTransport {
         testTransport.loadCar(tTestVolvo240);
         testTransport.loadCar(tTestSaab95);
         testTransport.unLoadCar(1);
-        assertTrue(tTestVolvo240 == testTransport.storeable.getStoredCars()[0] &&
-                testTransport.storeable.getStoredCars()[1] == null);
+        assertTrue(tTestVolvo240 == testTransport.getStoredCars()[0] &&
+                testTransport.getStoredCars()[1] == null);
     }
 
     @After

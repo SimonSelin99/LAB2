@@ -1,16 +1,13 @@
 
 public class Storeable {
 
-    private final int maxCars;
     private final Car[] storedCars;
-    private final String[] allowedCars;
     private int carIndex;
+    private final int maxCars;
 
-    Storeable(int maxCars, String[] allowedCars){
-        this.maxCars = maxCars;
-        this.allowedCars = allowedCars;
-        Collection<Car> animals = new ArrayList<Animal>();
-        this.storedCars = new Car[maxCars];
+    Storeable(Car[] storedCars){
+        this.storedCars = storedCars;
+        this.maxCars = storedCars.length;
         this.carIndex = 0;
     }
 
@@ -26,15 +23,10 @@ public class Storeable {
 
         if (Math.abs(car.getPosition()[0] - position[0]) <= 1.0 &&
                 Math.abs(car.getPosition()[1] - position[1]) <= 1.0) {
-            for(String s: allowedCars) {
-                if (car.getModelName().equals(s)) {
                     storedCars[carIndex] = car;
                     storedCars[carIndex].setPosition(position);
                     carIndex++;
                     return; }
-            }
-            throw new IllegalArgumentException("Car not allowed");
-        }
         throw new IllegalArgumentException("Car too far away");
     }
 
@@ -68,7 +60,4 @@ public class Storeable {
         return maxCars;
     }
 
-    public String[] getAllowedCars() {
-        return allowedCars;
-    }
 }
