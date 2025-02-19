@@ -1,9 +1,9 @@
 import java.awt.*;
 
-public class Transport extends BigCar {
+public class Transport<T extends SmallCar> extends BigCar{
     private final Storeable storeable;
     private final Truckbed truckbed;
-    public Transport(SmallCar[] storedCars){
+    public Transport(T[] storedCars){
         super(2,200,Color.black,"Transport");
         this.truckbed = new Truckbed(this);
         this.storeable = new Storeable(storedCars);

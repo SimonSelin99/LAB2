@@ -17,7 +17,7 @@ public class Scania extends BigCar{
     }
 
     public double speedFactor(){
-        return getEnginePower() * 0.01;
+        return getEnginePower() * 0.005;
     }
 
     public void incrementTruckBed(int angle){setTruckBed(angle);}

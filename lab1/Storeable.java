@@ -1,17 +1,22 @@
 
-public class Storeable {
+public class Storeable<T extends Car> {
 
-    private final Car[] storedCars;
+    private final T[] storedCars;
     private int carIndex;
     private final int maxCars;
 
-    Storeable(Car[] storedCars){
+    Storeable(T[] storedCars){
         this.storedCars = storedCars;
         this.maxCars = storedCars.length;
         this.carIndex = 0;
     }
 
-    protected void loadCar(Car car, double[] position) {
+    protected void loadCar(T car, double[] position) {
+        for(T storedCar:storedCars){
+            if(storedCar == car){
+                return;
+            }
+        }
         for (int i = 0; i < maxCars; i++) {
             if(null == storedCars[i]) {
                 carIndex = i;
@@ -21,11 +26,13 @@ public class Storeable {
         if (carIndex == maxCars - 1) {
             throw new ArrayIndexOutOfBoundsException("Storage full"); }
 
-        if (Math.abs(car.getPosition()[0] - position[0]) <= 1.0 &&
-                Math.abs(car.getPosition()[1] - position[1]) <= 1.0) {
+        if (Math.abs(car.getPosition()[0] - position[0]) <= 25 &&
+                Math.abs(car.getPosition()[1] - position[1]) <= 25) {
                     storedCars[carIndex] = car;
                     storedCars[carIndex].setPosition(position);
+                    car.stopEngine();
                     carIndex++;
+                    System.out.println("Stored car");
                     return; }
         throw new IllegalArgumentException("Car too far away");
     }
@@ -39,9 +46,9 @@ public class Storeable {
             amount--;}
     }
 
-    protected void unloadSpecificCar (Car car, double[] position){
+    protected void unloadSpecificCar (T car, double[] position){
         int ind = 0;
-        for(Car c:storedCars) {
+        for(T c:storedCars) {
             if (car == c) {
                 storedCars[ind].setPosition(new double[] {position[0], position[1]});
                 storedCars[ind] = null;
@@ -52,7 +59,7 @@ public class Storeable {
         throw new IllegalArgumentException("Car not stored");
     }
 
-    public Car[] getStoredCars() {
+    public T[] getStoredCars() {
         return storedCars;
     }
 

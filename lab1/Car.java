@@ -9,6 +9,7 @@ public abstract class Car implements Movable{
     private final String modelName; // The car model name
     private Direction currentDirection;
     private double[] position = new double[2];
+    private boolean engineOn = false;
     public enum Direction {UP, RIGHT, DOWN, LEFT}
 
     public Car(int nrDoors, double enginePower, Color color, String modelName){
@@ -16,7 +17,7 @@ public abstract class Car implements Movable{
         this.enginePower = enginePower;
         this.color = color;
         this.modelName = modelName;
-        setCurrentDirection(Direction.UP);
+        setCurrentDirection(Direction.LEFT);
         setPosition(new double[] {0,0});
         stopEngine();
     }
@@ -42,10 +43,12 @@ public abstract class Car implements Movable{
     }
 
     public void startEngine(){
+        engineOn = true;
         currentSpeed = 0.1;
     }
 
     public void stopEngine(){
+        engineOn = false;
         currentSpeed = 0;
     }
 
@@ -70,6 +73,7 @@ public abstract class Car implements Movable{
     public void incrementY(double y) { this.position[1] += y;}
 
     public void gas(double amount) {
+        if(!engineOn) return;
         double adjustedAmount = Math.max(0, Math.min(amount, 1)) * speedFactor();
         setCurrentSpeed(getCurrentSpeed() + adjustedAmount);
     }

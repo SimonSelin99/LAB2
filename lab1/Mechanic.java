@@ -1,8 +1,8 @@
 
-public class Mechanic {
+public class Mechanic <T extends Car>{
     private Storeable storeable;
     private final double[] position;
-    public Mechanic(Car[] storedCars, double[] position){
+    public Mechanic(T[] storedCars, double[] position){
         this.storeable = new Storeable(storedCars);
         this.position = position;
     }
@@ -13,4 +13,5 @@ public class Mechanic {
         storeable.loadCar(car, car.getPosition());
     }
     public Car[] getStoredCars() {return storeable.getStoredCars();}
+    public double[] getPosition() {return this.position;}
 }
