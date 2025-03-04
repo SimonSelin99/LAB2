@@ -17,13 +17,14 @@ public class CarController {
     private final int delay = 50;
     // The timer is started with a listener (see below) that executes the statements
     // each step between delays.
-    private Timer timer = new Timer(delay, new TimerListener());
+    private Timer timer = new Timer(delay, new TimerListener(this));
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
     ArrayList<Mechanic> mechanics = new ArrayList<>();
+    WorldModel model = new WorldModel();
 
     //methods:
 
@@ -36,10 +37,10 @@ public class CarController {
         ccSaab.setPosition(new double[] {0,300});
         Scania ccScania = new Scania();
         ccScania.setPosition(new double[]{0,200});
-        cc.cars.add(ccVolvo);
-        cc.cars.add(ccSaab);
-        cc.cars.add(ccScania);
-        cc.mechanics.add(new Mechanic<>(new Volvo240[4]
+        cc.model.addCar(ccVolvo);
+        cc.model.addCar(ccSaab);
+        cc.model.addCar(ccScania);
+        cc.model.addMechanic(new Mechanic<>(new Volvo240[4]
                 , new double[] {300,300}));
 
         // Start a new view and send a reference of self
@@ -49,14 +50,7 @@ public class CarController {
         cc.timer.start();
 
     }
-
-
-
-    /* Each step the TimerListener moves all the cars in the list and tells the
-     * view to update its images. Change this method to your needs.
-     * */
-    private class TimerListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
+        public void updateCars() {
             int index = 0;
             for (Car car : cars) {
                 car.move();
@@ -80,7 +74,10 @@ public class CarController {
 
             }
         }
-    }
+
+    /* Each step the TimerListener moves all the cars in the list and tells the
+     * view to update its images. Change this method to your needs.
+     * */
     void matchMechanic(Car car){
         for (Mechanic mechanic:mechanics){
             if (Math.abs(mechanic.getPosition()[0] - car.getPosition()[0]) <= 25 &&
