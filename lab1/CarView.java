@@ -23,6 +23,8 @@ public class CarView extends JFrame implements View{
     JButton lowerBedButton = new JButton("Lower Lift Bed");
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
+    JButton addCar = new JButton("Add random car");
+    JButton removeCar = new JButton("Remove random car");
 
     public CarView(String framename, CarController cc){
         this.carC = cc;
@@ -61,6 +63,9 @@ public class CarView extends JFrame implements View{
         controlPanel.add(brakeButton, 3);
         controlPanel.add(turboOffButton, 4);
         controlPanel.add(lowerBedButton, 5);
+        controlPanel.add(addCar, 6);
+        controlPanel.add(removeCar, 7);
+
         controlPanel.setPreferredSize(new Dimension((X/2)+4, 200));
         this.add(controlPanel);
         controlPanel.setBackground(Color.CYAN);
@@ -133,6 +138,20 @@ public class CarView extends JFrame implements View{
             @Override
             public void actionPerformed(ActionEvent e) {
                 carC.lowerBed();
+            }
+
+        });
+        addCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.addCar();
+            }
+
+        });
+        removeCar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                carC.removeCar();
             }
 
         });

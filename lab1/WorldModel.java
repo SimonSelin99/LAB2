@@ -22,21 +22,22 @@ public class WorldModel {
     }
 
     public void addCar() {
+        if(10 == cars.size()) return;
         Car car;
         double randCar = Math.round(Math.random() * 3);
-        double randX = Math.round(Math.random() * 800);
-        double randY = Math.round(Math.random() * 800);
-        if (randCar == 1) {
+        double randX = Math.round(Math.random() * 600);
+        double randY = Math.round(Math.random() * 500);
+        if (1 == randCar) {
             car = new Volvo240();
             car.setPosition(new double[]{randX, randY});
             cars.add(car);
         }
-        if (randCar == 2) {
+        if (2 == randCar) {
             car = new Saab95();
             car.setPosition(new double[]{randX, randY});
             cars.add(car);
         }
-        if (randCar == 0 || randCar == 3) {
+        if (0 == randCar || 3 == randCar) {
             car = new Scania();
             car.setPosition(new double[]{randX, randY});
             cars.add(car);
@@ -49,7 +50,8 @@ public class WorldModel {
     }
 
     public void removeCar() {
-        int randCar = (int) Math.round(Math.random() * cars.size());
+        if (cars.isEmpty()) return;
+        int randCar = (int) Math.round(Math.random() * (cars.size()-1));
         cars.remove(randCar);
     }
 
@@ -79,11 +81,12 @@ public class WorldModel {
                 }
                 matchMechanic(car);
 
-                view.drawPanel.moveit(x, y, index++);
+                //view.drawPanel.moveit(x, y, index++);
                 // repaint() calls the paintComponent method of the panel
-                view.drawPanel.repaint();
 
             }
+            view.drawPanel.moveit(cars);
+            view.drawPanel.repaint();
         }
 
 

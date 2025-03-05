@@ -17,13 +17,14 @@ public class DrawPanel extends JPanel{
     BufferedImage saabImage;
     BufferedImage scaniaImage;
     // To keep track of a single car's position
-    List<Point> carPoint = Arrays.asList(new Point(0,0), new Point(0,100), new Point(0,200));
+    //List<Point> carPoint = Arrays.asList(new Point(0,0), new Point(0,100), new Point(0,200));
+    ArrayList<Car> cars;
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
     // TODO: Make this general for all cars
-    void moveit(int x, int y, int index){
-        carPoint.set(index, new Point(x,y));
+    void moveit(ArrayList<Car> cars){
+        this.cars = cars;
     }
 
     // Initializes the panel and reads the images
@@ -31,6 +32,7 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
+        this.cars = new ArrayList<Car>();
         // Print an error message in case file is not found with a try/catch block
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
@@ -56,9 +58,14 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(volvoImage, carPoint.get(0).x, carPoint.get(0).y, null);
-        g.drawImage(saabImage, carPoint.get(1).x, carPoint.get(1).y, null);
-        g.drawImage(scaniaImage, carPoint.get(2).x, carPoint.get(2).y, null);// see javadoc for more info on the parameters
+        for (Car car:cars) {
+            if ("Volvo240".equals(car.getModelName()))
+                g.drawImage(volvoImage, (int )car.getPosition()[0], (int) car.getPosition()[1], null);
+            if ("Saab95".equals(car.getModelName()))
+                g.drawImage(saabImage, (int )car.getPosition()[0], (int) car.getPosition()[1], null);
+            if ("Scania".equals(car.getModelName()))
+                g.drawImage(scaniaImage, (int )car.getPosition()[0], (int) car.getPosition()[1], null);
+        }// see javadoc for more info on the parameters
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }
