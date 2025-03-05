@@ -2,7 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TimerListener implements ActionListener {
-    private CarController controller;
+    private final CarController controller;
 
     public TimerListener(CarController controller) {
         this.controller = controller;
