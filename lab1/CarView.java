@@ -4,6 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class CarView extends JFrame implements View{
     private static final int X = 800;
@@ -26,15 +27,13 @@ public class CarView extends JFrame implements View{
     JButton addCar = new JButton("Add random car");
     JButton removeCar = new JButton("Remove random car");
 
-    public CarView(String framename, CarController cc){
-        this.carC = cc;
+    public CarView(String framename, CarController carC){
+        this.carC = carC;
         initComponents(framename);
     }
 
-    @Override
-    public void drawComponents() {
-        drawPanel.repaint();
-    }
+
+
 
     private void initComponents(String title) {
         this.setTitle(title);
@@ -161,5 +160,29 @@ public class CarView extends JFrame implements View{
         this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    @Override
+    public void drawComponents() {
+        drawPanel.repaint();
+    }
+    @Override
+    public void moveIt(ArrayList<Car> cars) {
+        drawPanel.moveit(cars);
+    }
+    @Override
+    public int getX1() {
+        return drawPanel.getWidth();
+    }
+    @Override
+    public int getY1() {
+        return drawPanel.getHeight();
+    }
+    @Override
+    public int getPicHeight() {
+        return drawPanel.volvoImage.getHeight();
+    }
+    @Override
+    public int getPicWidth() {
+        return drawPanel.volvoImage.getWidth();
     }
 }

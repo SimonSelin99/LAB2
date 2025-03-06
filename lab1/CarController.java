@@ -10,8 +10,8 @@ public class CarController {
     private WorldModel model;
     ArrayList<Car> cars = new ArrayList<>();
     ArrayList<Mechanic> mechanics = new ArrayList<>();
-    public CarController() {
-        this.model = new WorldModel(this);
+    public CarController(WorldModel model) {
+        this.model = model;
         this.timer = new Timer(delay, new TimerListener(this));
     }
     public void start() {

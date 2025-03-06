@@ -4,18 +4,17 @@ import java.util.Random;
 public class WorldModel {
     private ArrayList<Car> cars;
     private ArrayList<Mechanic> mechanics;
-    private CarView view;
+    private View carView;
+    private CarController carController;
 
-    public WorldModel(CarController cc) {
-        this.view = new CarView("CarSim 1.0",cc);
+    public WorldModel() {
         cars = new ArrayList<>();
         mechanics = new ArrayList<>();
+        carController = new CarController(this);
+        this.carView = new CarView("CarSim 1.0",carController);
+        carController.start();
     }
 
-    WorldModel() {
-        cars = new ArrayList<>();
-        mechanics = new ArrayList<>();
-    }
 
     public void addCar(Car car) {
         cars.add(car);
@@ -64,29 +63,31 @@ public class WorldModel {
     }
 
         public void updateWorldState() {
-            int index = 0;
             for (Car car : cars) {
                 car.move();
                 int x = (int) Math.round(car.getPosition()[0]);
                 int y = (int) Math.round(car.getPosition()[1]);
-                if (view.drawPanel.getWidth()-view.drawPanel.volvoImage.getWidth() < x
+
+                if (carView.getX1()-carView.getPicWidth() < x
                         || 0 > x){
                     car.turnRight();
                     car.turnRight();
                 }
-                if (view.drawPanel.getHeight() - view.drawPanel.volvoImage.getHeight() < y
+                if (carView.getY1() - carView.getPicHeight() < y
                         || 0 > y){
                     car.turnRight();
                     car.turnRight();
                 }
+
+
                 matchMechanic(car);
 
                 //view.drawPanel.moveit(x, y, index++);
                 // repaint() calls the paintComponent method of the panel
 
             }
-            view.drawPanel.moveit(cars);
-            view.drawPanel.repaint();
+            carView.moveIt(cars);
+            carView.drawComponents();
         }
 
 
