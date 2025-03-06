@@ -1,3 +1,6 @@
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -6,22 +9,37 @@ public class WorldModel {
     private ArrayList<Mechanic> mechanics;
     private View carView;
     private CarController carController;
+    private Timer timer;
+    private Observable observable;
+    private ArrayList<String> carNames = new ArrayList<String>();
+    private ArrayList<double[]> positions = new ArrayList<>();
+    private int[] worldSize;
+    private int[] picSize;
 
-    public WorldModel() {
+
+    public WorldModel(Observable observable) {
+        this.observable =observable;
         cars = new ArrayList<>();
         mechanics = new ArrayList<>();
-        carController = new CarController(this);
-        this.carView = new CarView("CarSim 1.0",carController);
-        carController.start();
+        timer = new Timer(50,new TimerListener());
+        timer.start();
+
     }
 
+    public void setWorldSize(int[] worldSize) {
+        this.worldSize = worldSize;
+    }
+
+    public void setPicSize(int[] picSize) {
+        this.picSize = picSize;
+    }
 
     public void addCar(Car car) {
         cars.add(car);
     }
 
     public void addCar() {
-        if(10 == cars.size()) return;
+        if (10 == cars.size()) return;
         Car car;
         double randCar = Math.round(Math.random() * 3);
         double randX = Math.round(Math.random() * 600);
@@ -50,7 +68,7 @@ public class WorldModel {
 
     public void removeCar() {
         if (cars.isEmpty()) return;
-        int randCar = (int) Math.round(Math.random() * (cars.size()-1));
+        int randCar = (int) Math.round(Math.random() * (cars.size() - 1));
         cars.remove(randCar);
     }
 
@@ -62,33 +80,33 @@ public class WorldModel {
         mechanics.remove(mechanic);
     }
 
-        public void updateWorldState() {
-            for (Car car : cars) {
-                car.move();
-                int x = (int) Math.round(car.getPosition()[0]);
-                int y = (int) Math.round(car.getPosition()[1]);
+    public void updateWorldState() {
+        for (Car car : cars) {
+            car.move();
+            int x = (int) Math.round(car.getPosition()[0]);
+            int y = (int) Math.round(car.getPosition()[1]);
 
-                if (carView.getX1()-carView.getPicWidth() < x
-                        || 0 > x){
-                    car.turnRight();
-                    car.turnRight();
-                }
-                if (carView.getY1() - carView.getPicHeight() < y
-                        || 0 > y){
-                    car.turnRight();
-                    car.turnRight();
-                }
-
-
-                matchMechanic(car);
-
-                //view.drawPanel.moveit(x, y, index++);
-                // repaint() calls the paintComponent method of the panel
-
+            if (worldSize[0] - picSize[0] < x
+                    || 0 > x) {
+                car.turnRight();
+                car.turnRight();
             }
-            carView.moveIt(cars);
-            carView.drawComponents();
+            if (worldSize[1] - picSize[1] < y
+                    || 0 > y) {
+                car.turnRight();
+                car.turnRight();
+            }
+
+
+            matchMechanic(car);
+
+            //view.drawPanel.moveit(x, y, index++);
+            // repaint() calls the paintComponent method of the panel
+            carNames.add(car.getModelName());
+            positions.add(new double[] {car.getPosition()[0], car.getPosition()[1]});
         }
+        observable.ping(carNames, positions);
+    }
 
 
     void matchMechanic(Car car) {
@@ -168,6 +186,16 @@ public class WorldModel {
         for (Car car : cars) {
             if (car.getClass().equals(Scania.class))
                 ((Scania) car).incrementTruckBed(10);
+        }
+    }
+
+
+    public class TimerListener implements ActionListener {
+
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            updateWorldState();
         }
     }
 }

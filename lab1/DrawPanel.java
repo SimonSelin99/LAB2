@@ -18,13 +18,15 @@ public class DrawPanel extends JPanel{
     BufferedImage scaniaImage;
     // To keep track of a single car's position
     //List<Point> carPoint = Arrays.asList(new Point(0,0), new Point(0,100), new Point(0,200));
-    ArrayList<Car> cars;
+    ArrayList<String> carNames;
+    ArrayList<double[]> position;
     BufferedImage volvoWorkshopImage;
     Point volvoWorkshopPoint = new Point(300,300);
 
     // TODO: Make this general for all cars
-    void moveit(ArrayList<Car> cars){
-        this.cars = cars;
+    void moveit(ArrayList<String> carNames, ArrayList<double[]> postion){
+        this.carNames = carNames;
+        this.position = postion;
     }
 
     // Initializes the panel and reads the images
@@ -32,7 +34,8 @@ public class DrawPanel extends JPanel{
         this.setDoubleBuffered(true);
         this.setPreferredSize(new Dimension(x, y));
         this.setBackground(Color.green);
-        this.cars = new ArrayList<Car>();
+        this.carNames = new ArrayList<String>();
+        this.position = new ArrayList<double[]>();
         // Print an error message in case file is not found with a try/catch block
         try {
             // You can remove the "pics" part if running outside of IntelliJ and
@@ -58,14 +61,17 @@ public class DrawPanel extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (Car car:cars) {
-            if ("Volvo240".equals(car.getModelName()))
-                g.drawImage(volvoImage, (int )car.getPosition()[0], (int) car.getPosition()[1], null);
-            if ("Saab95".equals(car.getModelName()))
-                g.drawImage(saabImage, (int )car.getPosition()[0], (int) car.getPosition()[1], null);
-            if ("Scania".equals(car.getModelName()))
-                g.drawImage(scaniaImage, (int )car.getPosition()[0], (int) car.getPosition()[1], null);
+        int index = 0;
+        for (String car:carNames) {
+            if ("Volvo240".equals(car))
+                g.drawImage(volvoImage, (int ) position.get(index)[0], (int) position.get(index++)[1], null);
+            if ("Saab95".equals(car))
+                g.drawImage(saabImage, (int )position.get(index)[0], (int) position.get(index++)[1], null);
+            if ("Scania".equals(car))
+                g.drawImage(scaniaImage, (int )position.get(index)[0], (int) position.get(index++)[1], null);
         }// see javadoc for more info on the parameters
+        carNames.clear();
+        position.clear();
         g.drawImage(volvoWorkshopImage, volvoWorkshopPoint.x, volvoWorkshopPoint.y, null);
     }
 }
