@@ -22,7 +22,7 @@ public class Storeable<T extends Car> {
                 carIndex = i;
                 break; }
         }
-
+    //test
         if (carIndex == maxCars - 1) {
             throw new ArrayIndexOutOfBoundsException("Storage full"); }
 
