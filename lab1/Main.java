@@ -6,11 +6,11 @@ public class Main {
     public static void main(String[] args) {
 
        DrawPanel drawPanel =new DrawPanel(X, Y-240);
-       View carView = new CarView("CarSim 1.3.3.7", drawPanel, X, Y);
         Observable observable = new Observable();
-        observable.addObserver(carView);
         WorldModel model = new WorldModel(observable);
-        CarController cc = new CarController(model, carView, X, Y);
+        CarController cc = new CarController(model, X, Y);
+        View carView = new CarView("CarSim 1.3.3.7", drawPanel, cc, X, Y);
+        observable.addObserver(carView);
 
         Volvo240 ccVolvo = new Volvo240();
         ccVolvo.setPosition(new double[]{0, 300});
